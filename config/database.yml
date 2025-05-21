@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: "/Users/andy/Library/Group\ Containers/34YW5XSRB7.com.omnigroup.OmniFocus/com.omnigroup.OmniFocus4/com.omnigroup.OmniFocusModel/OmniFocusDatabase.db"
+  database: "<%= ENV.fetch('OMNIFOCUS_DB_PATH') %>"
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
