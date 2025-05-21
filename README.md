@@ -10,7 +10,7 @@ I have followed the naming as used in the database rather than the app, e.g. `Pr
 
 ## Configuration
 
-Add a `.env.` file which defines the path to your database, e.g.:
+Add a `.env` file which defines the path to your database, e.g.:
 
 ```
 OMNIFOCUS_DB_PATH="/Users/andy/Library/Group\ Containers/ABC123.com.omnigroup.OmniFocus/com.omnigroup.OmniFocus4/com.omnigroup.OmniFocusModel/OmniFocusDatabase.db"
