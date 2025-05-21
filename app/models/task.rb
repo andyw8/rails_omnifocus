@@ -12,4 +12,6 @@ class Task < ApplicationRecord
   belongs_to :containing_project_info, class_name: "ProjectInfo"
   has_many :task_to_tags, dependent: :destroy
   belongs_to :project_info, class_name: "ProjectInfo"
+
+  scope(:no_project) { where(containingProjectInfo: nil) }
 end
