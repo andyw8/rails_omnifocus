@@ -14,4 +14,9 @@ class Task < ApplicationRecord
   belongs_to :project_info, class_name: "ProjectInfo"
 
   scope :no_project, -> { where(containingProjectInfo: nil) }
+  scope :in_inbox, -> { where(ininbox: true) }
+
+  def date_added
+    Time.at(dateAdded + OFFSET)
+  end
 end
