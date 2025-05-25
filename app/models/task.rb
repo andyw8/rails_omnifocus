@@ -14,9 +14,21 @@ class Task < ApplicationRecord
   belongs_to :project_info, class_name: "ProjectInfo"
 
   scope :no_project, -> { where(containingProjectInfo: nil) }
-  scope :in_inbox, -> { where(ininbox: true) }
+  scope :in_inbox, -> { where(inInbox: true) }
+  scope :deferred, -> { where(dateToStart: nil) }
+  scope :not_deferred, -> { where.not(dateToStart: nil) }
+  scope :completed, -> { where.not(dateCompleted: nil) }
+  scope :not_completed, -> { where(dateCompleted: nil) }
 
-  def date_added
+  def added_at
     Time.at(dateAdded + OFFSET)
+  end
+
+  def modified_at
+    Time.at(dateModified + OFFSET)
+  end
+
+  def completed_at
+    Time.at(dateCompleted + OFFSET)
   end
 end
