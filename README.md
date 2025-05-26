@@ -8,6 +8,8 @@ There are no views or controllers yet, only models, so you need to interact it w
 
 I have followed the naming as used in the database rather than the app, e.g. `ProjectInfo` instead of `Project`.
 
+This is only intended for reading, not writing. You could easily corrupt the OmniFocus database by modifying.
+
 ## Configuration
 
 Add a `.env` file which defines the path to your database, e.g.:
