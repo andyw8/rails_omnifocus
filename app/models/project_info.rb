@@ -8,6 +8,9 @@ class ProjectInfo < ApplicationRecord
   has_many :folders, through: :tasks
   has_many :next_tasks, class_name: "Task", foreign_key: "nextTask"
 
+  scope :active, -> { where(status: :active) }
+  scope :inactive, -> { where(status: :inactive) }
+
   def name
     task.name
   end
