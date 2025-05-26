@@ -1,0 +1,9 @@
+
+<% @tasks_by_project.each do |project_name, tasks| %>
+  <h2><%= project_name || "No Project" %></h2>
+  <ul>
+    <% tasks.each do |task| %>
+      <li><%= task.name %></li>
+    <% end %>
+  </ul>
+<% end %>

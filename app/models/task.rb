@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   has_many :folders, through: :attachments
   has_many :perspectives, through: :attachments
   has_many :children, class_name: "Task", foreign_key: "parent"
-  belongs_to :parent, class_name: "Task"
+  # belongs_to :parent, class_name: "Task"
   has_many :alarms, dependent: :destroy
   has_many :tags, through: :task_to_tags
   belongs_to :containing_project_info, class_name: "ProjectInfo"
@@ -15,10 +15,14 @@ class Task < ApplicationRecord
 
   scope :no_project, -> { where(containingProjectInfo: nil) }
   scope :in_inbox, -> { where(inInbox: true) }
-  scope :deferred, -> { where(dateToStart: nil) }
-  scope :not_deferred, -> { where.not(dateToStart: nil) }
+  # scope :deferred, -> { where(dateToStart: nil) }
+  # scope :not_deferred, -> { where.not(dateToStart: nil) }
+  scope :deferred, -> { where("dateToStart > ?", Time.now) }
+  scope :not_deferred, -> { where("dateToStart is null OR dateToStart < ?", Time.now) }
   scope :completed, -> { where.not(dateCompleted: nil) }
   scope :not_completed, -> { where(dateCompleted: nil) }
+  scope :blocked, -> { where(blocked: true) }
+  scope :not_blocked, -> { where(blocked: false) }
 
   def added_at
     Time.at(dateAdded + OFFSET)
@@ -29,6 +33,20 @@ class Task < ApplicationRecord
   end
 
   def completed_at
-    Time.at(dateCompleted + OFFSET)
+    Time.at(dateCompleted - OFFSET)
+  end
+
+  # unsure how this differs from dateToStart
+  def effective_date_to_start_at
+    Time.at(effectiveDateToStart - OFFSET)
+  end
+
+  def parent_name
+    return nil unless parent
+    Task.find(parent).name
+  end
+
+  def self.available
+    not_deferred.not_completed.not_blocked
   end
 end
