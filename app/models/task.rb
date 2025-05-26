@@ -23,6 +23,8 @@ class Task < ApplicationRecord
   scope :not_completed, -> { where(dateCompleted: nil) }
   scope :blocked, -> { where(blocked: true) }
   scope :not_blocked, -> { where(blocked: false) }
+  scope :flagged, -> { where(flagged: true) }
+  scope :not_flagged, -> { where(flagged: false) }
 
   def added_at
     Time.at(dateAdded + OFFSET)
